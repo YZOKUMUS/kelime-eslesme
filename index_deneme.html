@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arapça-Türkçe Eşleştirme Oyunu</title>
+  <style>
+    /* Genel stil */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #2d3e50;
+    }
+
+    .score {
+      font-size: 18px;
+      margin: 10px 0;
+      color: #4CAF50;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #f9fafb;
+      border: 2px solid #e1e7ec;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .kelime-grubu {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .sutun {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .kart, .hedef-alan {
+      padding: 15px;
+      margin: 10px;
+      background-color: #e3f2fd;
+      border-radius: 10px;
+      width: 150px;
+      height: 60px;
+      text-align: center;
+      cursor: grab;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(14px, 5vw, 20px); /* Dinamik font boyutu */
+      font-weight: bold;
+      line-height: 1.2;
+      overflow: hidden; /* Taşmayı gizle */
+      word-wrap: break-word; /* Uzun kelimeleri böler */
+      text-overflow: ellipsis; /* Uzun metinlere ... ekler */
+    }
+
+    .kart.surukleniyor {
+      opacity: 0.5;
+    }
+
+    .kart.dogru, .hedef-alan.dogru {
+      background-color: #d4edda;
+      cursor: not-allowed;
+    }
+
+    .hedef-alan.yanlis {
+      background-color: #f8d7da;
+    }
+
+    .navigation button {
+      padding: 12px 24px;
+      margin: 10px 5px;
+      border: none;
+      background-color: #5c6bc0;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .navigation button:hover {
+      background-color: #3949ab;
+    }
+
+    .navigation button:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Arapça-Türkçe Eşleştirme Oyunu</h1>
+    <p class="score">Puan: <span id="score">0</span></p>
+    <input type="file" id="excel-file" accept=".xlsx, .xls" />
+    <div id="oyun-alani"></div>
+    <div class="navigation">
+      <button id="onceki-grup" disabled>Önceki</button>
+      <button id="sonraki-grup">Sonraki</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
+  <script>
+    let kelimeListesi = [];
+    let currentGroupIndex = 0;
+    const groupSize = 10;
+    let score = 0;
+
+    const oyunAlani = document.getElementById('oyun-alani');
+    const prevButton = document.getElementById('onceki-grup');
+    const nextButton = document.getElementById('sonraki-grup');
+    const scoreDisplay = document.getElementById('score');
+
+    document.getElementById('excel-file').addEventListener('change', loadExcel);
+
+    prevButton.addEventListener('click', () => {
+      currentGroupIndex--;
+      renderGroup();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentGroupIndex++;
+      renderGroup();
+    });
+
+    function loadExcel(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        kelimeListesi = jsonData.slice(1).map(([arabic, turkish]) => ({ arabic, turkish }));
+        renderGroup();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function renderGroup() {
+      oyunAlani.innerHTML = '';
+      const start = currentGroupIndex * groupSize;
+      const group = kelimeListesi.slice(start, start + groupSize);
+
+      if (!group.length) return;
+
+      const kelimeGrubu = document.createElement('div');
+      kelimeGrubu.classList.add('kelime-grubu');
+
+      const arabicSutun = createColumn(group, 'arabic', true);
+      const turkishSutun = createColumn(shuffleArray(group), 'turkish', false);
+
+      kelimeGrubu.append(arabicSutun, turkishSutun);
+      oyunAlani.appendChild(kelimeGrubu);
+
+      prevButton.disabled = currentGroupIndex === 0;
+      nextButton.disabled = start + groupSize >= kelimeListesi.length;
+    }
+
+    function createColumn(data, key, isDraggable) {
+      const sutun = document.createElement('div');
+      sutun.classList.add('sutun');
+
+      data.forEach((item) => {
+        const element = document.createElement('div');
+        element.classList.add(isDraggable ? 'kart' : 'hedef-alan');
+        element.textContent = item[key];
+        element.dataset.arabic = item.arabic;
+
+        if (isDraggable) addDragEvents(element);
+        else addDropEvents(element);
+
+        sutun.appendChild(element);
+      });
+
+      return sutun;
+    }
+
+    function addDragEvents(element) {
+      element.setAttribute('draggable', 'true');
+      element.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', element.dataset.arabic);
+        element.classList.add('surukleniyor');
+      });
+      element.addEventListener('dragend', () => element.classList.remove('surukleniyor'));
+    }
+
+    function addDropEvents(element) {
+      element.addEventListener('dragover', (e) => e.preventDefault());
+      element.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const draggedArabic = e.dataTransfer.getData('text/plain');
+        const targetArabic = element.dataset.arabic;
+
+        if (draggedArabic === targetArabic) {
+          element.classList.add('dogru');
+          const correctCard = document.querySelector(`[data-arabic="${draggedArabic}"]`);
+          correctCard.classList.add('dogru');
+
+          // Puan artırma
+          score += 10;
+          scoreDisplay.textContent = score;
+
+          element.setAttribute('draggable', 'false');
+          correctCard.setAttribute('draggable', 'false');
+
+          // Arapça kelimeyi sesli oku
+          playArabicAudio(draggedArabic);
+        } else {
+          element.classList.add('yanlis');
+          setTimeout(() => element.classList.remove('yanlis'), 500);
+
+          // Yanlışta puan azaltma
+          score -= 5;
+          scoreDisplay.textContent = score;
+        }
+      });
+    }
+
+    function playArabicAudio(word) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'ar-SA';
+        speechSynthesis.speak(utterance);
+      } else {
+        console.error('Tarayıcınız sesli okuma desteği sağlamıyor.');
+      }
+    }
+
+    function shuffleArray(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+  </script>
+</body>
+</html>

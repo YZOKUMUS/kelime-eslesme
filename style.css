@@ -1,120 +1,162 @@
+/* Genel sayfa stili */
+.amiri-regular {
+  font-family: "Amiri", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.amiri-bold {
+  font-family: "Amiri", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.amiri-regular-italic {
+  font-family: "Amiri", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.amiri-bold-italic {
+  font-family: "Amiri", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #eef2f7;
-  margin: 0;
-  padding: 0;
-  color: #333;
+  font-family: "Amiri", Arial;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #eef2f7; /* Sayfanın arka plan rengi açık gri-mavi */
+  margin: 0; /* Sayfa kenarlarında boşluk bırakılmaz */
+  padding: 0; /* Sayfa içindeki boşluklar sıfırlanır */
+  color: #333; /* Metin rengi koyu gri */
 }
 
+/* Sayfa içeriği için ana konteyner */
 .container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  width: 90%; /* Konteyner genişliği ekranın %90'ı kadar olacak */
+  max-width: 1000px; /* Maksimum genişlik 1000px ile sınırlıdır */
+  margin: 40px auto; /* Üst ve alt boşluk 40px, sol ve sağda ortalanmış */
+  padding: 0; /* İçeride 20px boşluk bırakılır */
+  background-color: #ffffff; /* Konteynerin arka planı beyaz */
+  border-radius: 10px; /* Köşeler yuvarlatılır */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Konteyner etrafına hafif gölge eklenir */
+  text-align: justify; /* İçerik ortalanır */
 }
 
+/* Başlık stili */
 h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #2c3e50;
+  font-size: 3.2rem; /* Başlık font büyüklüğü */
+  margin-bottom: 5px; /* Başlık altında 5px boşluk bırakılır */
+  color: hsl(30deg 82% 43%); /* Başlık rengi kahverengi     */
 }
 
+/* Skor metni stili */
 .score {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #1e88e5;
-  font-weight: bold;
+  font-size: 28px; /* Skor font büyüklüğü */
+  margin: 10px 0; /* Skor metni üst ve alt tarafında 10px boşluk bırakılır */
+  color: #1e88e5; /* Skor rengi mavi */
+  font-weight: bold; /* Skor metni kalın yazılır */
 }
 
+/* Dosya yükleme input alanı */
 input[type="file"] {
-  display: block;
-  margin: 20px auto;
-  padding: 10px;
-  background-color: #f9fafb;
-  border: 2px solid #e1e7ec;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  display: inline-block; /* Input elemanı bloğa dönüştürülür */
+  margin: 20px auto; /* Üst ve alt boşluk 20px, sağda solda ortalanır */
+  padding: 10px; /* İçeriğe 10px boşluk verilir */
+  background-color: #74992e; /* Arka plan rengi çok açık gri */
+  border: 2px solid #e1e7ec; /* Sınır rengi açık gri */
+  border-radius: 8px; /* Köşeler yuvarlatılır */
+  font-size: 8ch/* Yazı tipi büyüklüğü 16px */
+  font-size: 12px; /* Kenar rengi değişimi yavaşça yapılır */
 }
 
+/* Dosya input alanına odaklanıldığında kenar rengi değişir */
 input[type="file"]:focus {
-  border-color: #1e88e5;
-  outline: none;
+  border-color: #1e88e5; /* Odaklanıldığında mavi kenar rengi */
+  outline: none; /* Dış çerçeve (outline) kaldırılır */
 }
 
+/* Kelime gruplarını içeren kapsayıcı */
 .kelime-grubu {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+  display: flex; /* Flexbox kullanılarak düzenleme yapılır */
+  justify-content: center     /*  Elemanlar arasına boşluk bırakılır */
+  gap: 5px; /* Elemanlar arasına 1px boşluk */
+  margin-bottom: 10px; /* Alt tarafta 30px boşluk bırakılır */
+  flex-wrap: wrap; /* Elemanlar sarmalı şekilde yerleşir */
 }
 
+/* Sütunlar için stil */
 .sutun {
-  flex: 1;
+  flex: 1; /* Her sütun eşit genişlikte olacak şekilde ayarlanır */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; /* İçerik dikeyde düzenlenir */
+  align-items: center; /* Sütun içerisindeki öğeler ortalanır */
 }
 
+/* Kartlar ve hedef alanlar için temel stil */
 .kart, .hedef-alan {
-  padding: 15px;
-  margin: 10px;
-  background-color: #e3f2fd;
-  border-radius: 10px;
-  width: 150px;
-  height: 60px;
-  text-align: center;
-  cursor: grab;
-  transition: transform 0.2s ease, background-color 0.3s;
+  padding: 10px 120px 8px; /* kutu boyutları buradan değiştirilebilir */
+  margin: 10px; /* Kartlar arasında 10px boşluk bırakılır */
+  background-color: rgb(255, 255, 128); /* Arka plan rengi açık mavi */
+  border-radius: 30px; /* Köşeler yuvarlatılır */
+  width: 150px; /* Kartlar genişliği 150px olur */
+  height: 60px; /* Kartlar yüksekliği 60px olur */
+  text-align: center; /* İçerik ortalanır */
+  cursor: grab; /* Fare imleci kart sürüklenebilir olduğunu gösterir */
+  transition: transform 0.2s ease, background-color 0.3s; /* Kart üzerine gelindiğinde animasyon eklenir */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(14px, 5vw, 20px);
-  font-weight: bold;
-  line-height: 1.2;
-  overflow: hidden;
-  word-wrap: break-word;
-  text-overflow: ellipsis;
+  font-size: 30px; /* Font büyüklüğü ekran genişliğine göre ayarlanır */
+  font-weight: lighter; /* Font kalınlaştırılır */
+  line-height: 1.0; /* Satır yüksekliği ayarlanır */
+  overflow: clip; /* Taşan içerik gizlenir */
+  word-wrap: break-word; /* Uzun kelimeler satır içinde kırılır */
+  text-overflow: ellipsis; /* Taşan metinde "..." görünür */
+  white-space: nowrap;
 }
 
+/* Kart sürüklenirken opaklık azaltılır ve büyütülür */
 .kart.surukleniyor {
-  opacity: 0.6;
-  transform: scale(1.1);
+  opacity: 0; /* sürüklenen kartın yerini boşaltıyor */
+  transform: scale(0.5) translate(-100%, -100%); /* sürüklenen Kart döndürmek */
 }
 
+/* Doğru kartlar ve doğru hedef alanlar */
 .kart.dogru, .hedef-alan.dogru {
-  background-color: #d4edda;
-  border: 2px solid #28a745;
-  cursor: not-allowed;
+  background-color: #d4edda; /* Doğru renk yeşil */
+  border: 2px solid #28a745; /* Doğru kenar rengi yeşil */
+  cursor: not-allowed; /* Fare imleci pasif hale gelir */
 }
 
+/* Yanlış hedef alanı */
 .hedef-alan.yanlis {
-  background-color: #f8d7da;
-  border: 2px solid #dc3545;
+  background-color: #f8d7da; /* Yanlış renk kırmızı */
+  border: 2px solid #dc3545; /* Yanlış kenar rengi kırmızı */
 }
 
+/* Navigasyon düğmeleri için stil */
 .navigation button {
-  padding: 12px 24px;
-  margin: 10px 5px;
-  border: none;
-  background-color: #1e88e5;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  padding: 12px 24px; /* Düğme içi boşluk */
+  margin: 10px 5px; /* Düğme dışı boşluk */
+  border: none; /* Sınır yok */
+  background-color: #1e88e5; /* Arka plan rengi mavi */
+  color: white; /* Yazı rengi beyaz */
+  border-radius: 6px; /* Köşeler yuvarlatılır */
+  cursor: pointer; /* Fare imleci tıklanabilir */
+  font-size: 16px; /* Yazı tipi büyüklüğü */
+  transition: background-color 0.3s; /* Renk değişimi animasyonu */
 }
 
+/* Düğme üzerine gelindiğinde arka plan rengi değişir */
 .navigation button:hover {
-  background-color: #1565c0;
+  background-color: #1565c0; /* Hover durumunda koyu mavi */
 }
 
+/* Düğme devre dışı olduğunda */
 .navigation button:disabled {
-  background-color: gray;
-  cursor: not-allowed;
+  background-color: gray; /* Gri arka plan */
+  cursor: not-allowed; /* Fare imleci tıklanamaz hale gelir */
 }

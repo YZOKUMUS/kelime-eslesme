@@ -1,45 +1,54 @@
-/* Genel sayfa stili */
-.amiri-regular {
-  font-family: "Amiri", serif;
-  font-weight: 400;
-  font-style: normal;
+/* Define the fonts */
+@font-face {
+  font-family: 'Amiri Bold';
+  src: url('assets/Amiri-Bold.ttf') format('truetype');
+  font-weight: bold;
 }
 
-.amiri-bold {
-  font-family: "Amiri", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.amiri-regular-italic {
-  font-family: "Amiri", serif;
-  font-weight: 400;
+@font-face {
+  font-family: 'Amiri Bold Italic';
+  src: url('assets/Amiri-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
   font-style: italic;
 }
 
-.amiri-bold-italic {
-  font-family: "Amiri", serif;
-  font-weight: 700;
-  font-style: italic;
+@font-face {
+  font-family: 'Amiri Quran';
+  src: url('assets/AmiriQuran-Regular.ttf') format('truetype');
+  font-weight: normal;
 }
+
+@font-face {
+  font-family: 'Uthmanic Hafs';
+  src: url('assets/UthmanicHafs1Ver18.woff2') format('woff2');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'AmiriQuranColored';
+  src: url('assets/AmiriQuranColored-Regular.ttf') format('truetype');
+  font-weight: lighter;
+}
+
+
 
 body {
-  font-family: "Amiri", Arial;
-  font-weight: 400;
+  font-family: 'AmiriQuranColored'; /* İstediğin yazı fontunu yapıştır, @font-face deki font-family adı ne ise */
+  font-weight: 50;
   font-style: normal;
-  background-color: #eef2f7; /* Sayfanın arka plan rengi açık gri-mavi */
+  background-color: #90bcf1; /* Sayfanın arka plan rengi açık gri-mavi */
   margin: 0; /* Sayfa kenarlarında boşluk bırakılmaz */
   padding: 0; /* Sayfa içindeki boşluklar sıfırlanır */
-  color: #333; /* Metin rengi koyu gri */
+  color: #0a178f; /* Metin rengi koyu gri */
 }
 
 /* Sayfa içeriği için ana konteyner */
 .container {
-  width: 90%; /* Konteyner genişliği ekranın %90'ı kadar olacak */
+  width: 100%; /* Konteyner genişliği ekranın %90'ı kadar olacak */
   max-width: 1000px; /* Maksimum genişlik 1000px ile sınırlıdır */
-  margin: 40px auto; /* Üst ve alt boşluk 40px, sol ve sağda ortalanmış */
-  padding: 0; /* İçeride 20px boşluk bırakılır */
-  background-color: #ffffff; /* Konteynerin arka planı beyaz */
+  margin: 10px auto; /* Üst ve alt boşluk 40px, sol ve sağda ortalanmış */
+  padding: 10px; /* İçeride 20px boşluk bırakılır */
+  background-color: #bdd3f0; /* Konteynerin arka planı beyaz */
   border-radius: 10px; /* Köşeler yuvarlatılır */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Konteyner etrafına hafif gölge eklenir */
   text-align: justify; /* İçerik ortalanır */
@@ -49,7 +58,7 @@ body {
 h1 {
   font-size: 3.2rem; /* Başlık font büyüklüğü */
   margin-bottom: 5px; /* Başlık altında 5px boşluk bırakılır */
-  color: hsl(30deg 82% 43%); /* Başlık rengi kahverengi     */
+  color: hsl(30deg 82% 43%); /* Başlık rengi kahverengi */
 }
 
 /* Skor metni stili */
@@ -65,41 +74,41 @@ input[type="file"] {
   display: inline-block; /* Input elemanı bloğa dönüştürülür */
   margin: 20px auto; /* Üst ve alt boşluk 20px, sağda solda ortalanır */
   padding: 10px; /* İçeriğe 10px boşluk verilir */
-  background-color: #74992e; /* Arka plan rengi çok açık gri */
+  background-color: #dbf3ae; /* Arka plan rengi */
   border: 2px solid #e1e7ec; /* Sınır rengi açık gri */
   border-radius: 8px; /* Köşeler yuvarlatılır */
-  font-size: 8ch/* Yazı tipi büyüklüğü 16px */
-  font-size: 12px; /* Kenar rengi değişimi yavaşça yapılır */
+  font-size: 12px; /* Yazı tipi büyüklüğü */
+  transition: border-color 0.3s; /* Kenar rengi değişimi yavaşça yapılır */
 }
 
 /* Dosya input alanına odaklanıldığında kenar rengi değişir */
 input[type="file"]:focus {
-  border-color: #1e88e5; /* Odaklanıldığında mavi kenar rengi */
+  border-color: #5a2a0377; /* Odaklanıldığında mavi kenar rengi */
   outline: none; /* Dış çerçeve (outline) kaldırılır */
 }
 
 /* Kelime gruplarını içeren kapsayıcı */
 .kelime-grubu {
   display: flex; /* Flexbox kullanılarak düzenleme yapılır */
-  justify-content: center     /*  Elemanlar arasına boşluk bırakılır */
-  gap: 5px; /* Elemanlar arasına 1px boşluk */
-  margin-bottom: 10px; /* Alt tarafta 30px boşluk bırakılır */
+  justify-content: center; /* Elemanlar ortalanır */
+  gap: 15px; /* Elemanlar arasına 5px boşluk */
+  margin-bottom: 20px; /* Alt tarafta 10px boşluk bırakılır */
   flex-wrap: wrap; /* Elemanlar sarmalı şekilde yerleşir */
 }
 
 /* Sütunlar için stil */
 .sutun {
-  flex: 1; /* Her sütun eşit genişlikte olacak şekilde ayarlanır */
+  flex: 2; /* Her sütun eşit genişlikte olacak şekilde ayarlanır */
   display: flex;
-  flex-direction: column; /* İçerik dikeyde düzenlenir */
+  flex-direction: column-reverse; /* İçerik dikeyde düzenlenir */
   align-items: center; /* Sütun içerisindeki öğeler ortalanır */
 }
 
 /* Kartlar ve hedef alanlar için temel stil */
 .kart, .hedef-alan {
-  padding: 10px 120px 8px; /* kutu boyutları buradan değiştirilebilir */
-  margin: 10px; /* Kartlar arasında 10px boşluk bırakılır */
-  background-color: rgb(255, 255, 128); /* Arka plan rengi açık mavi */
+  padding: 10px 100px; /* Kutu boyutları buradan değiştirilebilir */
+  margin: 5px; /* Kartlar arasında 10px boşluk bırakılır */
+  background-color: rgba(21, 142, 241, 0.363); /* Arka plan rengi açık sarı */
   border-radius: 30px; /* Köşeler yuvarlatılır */
   width: 150px; /* Kartlar genişliği 150px olur */
   height: 60px; /* Kartlar yüksekliği 60px olur */
@@ -109,19 +118,18 @@ input[type="file"]:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px; /* Font büyüklüğü ekran genişliğine göre ayarlanır */
-  font-weight: lighter; /* Font kalınlaştırılır */
+  font-size: 30px; /* Font büyüklüğü */
+  font-weight: lighter; /* Font hafifletilir */
   line-height: 1.0; /* Satır yüksekliği ayarlanır */
-  overflow: clip; /* Taşan içerik gizlenir */
-  word-wrap: break-word; /* Uzun kelimeler satır içinde kırılır */
+  overflow: hidden; /* Taşan içerik gizlenir */
   text-overflow: ellipsis; /* Taşan metinde "..." görünür */
   white-space: nowrap;
 }
 
 /* Kart sürüklenirken opaklık azaltılır ve büyütülür */
 .kart.surukleniyor {
-  opacity: 0; /* sürüklenen kartın yerini boşaltıyor */
-  transform: scale(0.5) translate(-100%, -100%); /* sürüklenen Kart döndürmek */
+  opacity: 0; /* Sürüklenen kartın yerini boşaltır */
+  transform: scale(0.5) translate(-100%, -100%); /* Sürüklenen kart döndürülür */
 }
 
 /* Doğru kartlar ve doğru hedef alanlar */

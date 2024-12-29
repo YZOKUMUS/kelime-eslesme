@@ -10,7 +10,7 @@ let data = await fetch('./data.json')
 
 let kelimeListesi = [];
 let currentGroupIndex = 0;
-const groupSize = 10;
+const groupSize = 8;
 let score = 0;
 
 const oyunAlani = document.getElementById('oyun-alani');
@@ -43,7 +43,7 @@ function loadExcel(event) {
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-    kelimeListesi = jsonData.slice(1).map(([arabic, turkish]) => ({ arabic, turkish }));
+    kelimeListesi = jsonData.slice(1).map(([arabic, turkish, soundUrl]) => ({ arabic, turkish, soundUrl }));
     renderGroup();
   };
   reader.readAsArrayBuffer(file);
@@ -130,11 +130,19 @@ function addDropEvents(element) {
   });
 }
 
-// Arapça kelimenin sesini çalma
+// Arapça kelimenin sesini çalma (sound_url kullanılarak)
 function playArabicAudio(word) {
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = 'ar-SA';
-  speechSynthesis.speak(utterance);
+  // Kelimeyi kelimeListesi'nde bul
+  const kelime = kelimeListesi.find(item => item.arabic === word);
+  if (kelime && kelime.soundUrl) {
+    const audio = new Audio(kelime.soundUrl);
+    audio.play();
+  } else {
+    // Eğer ses dosyası yoksa, metin okuma
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'ar-SA';
+    speechSynthesis.speak(utterance);
+  }
 }
 
 // Diziyi karıştırma

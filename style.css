@@ -64,7 +64,7 @@ h1 {
 /* Skor metni stili */
 .score {
   font-size: 18px; /* Skor font büyüklüğü */
-  margin: 1 /* Skor metni üst ve alt tarafında 10px boşluk bırakılır */
+  margin: 10px; /* Skor metni üst ve alt tarafında 10px boşluk bırakılır */
   color: #1e88e5; /* Skor rengi mavi */
   font-weight: bold; /* Skor metni kalın yazılır */
 }
@@ -149,7 +149,7 @@ input[type="file"]:focus {
 /* Kart sürüklenirken opaklık azaltılır ve büyütülür */
 .kart.surukleniyor {
   opacity: 0; /* Sürüklenen kartın yerini boşaltır */
-  transform: scale(0.5) translate(-100%, -100%); /* Sürüklenen kart döndürülür */
+  transform: scale(0.5); /* Sürüklenen kart döndürülür */
 }
 
 /* Doğru kartlar ve doğru hedef alanlar */

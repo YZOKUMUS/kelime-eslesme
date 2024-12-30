@@ -34,7 +34,7 @@
 
 body {
   font-family: 'AmiriQuranColored'; /* İstediğin yazı fontunu yapıştır, @font-face deki font-family adı ne ise */
-  font-weight: 50;
+  font-weight: 90;
   font-style: normal;
   background-color: #90bcf1; /* Sayfanın arka plan rengi açık gri-mavi */
   margin: 0; /* Sayfa kenarlarında boşluk bırakılmaz */
@@ -44,9 +44,9 @@ body {
 
 /* Sayfa içeriği için ana konteyner */
 .container {
-  width: 100%; /* Konteyner genişliği ekranın %90'ı kadar olacak */
+  width: 100%; /* Konteyner genişliği ekranın %100'ı kadar olacak */
   max-width: 1000px; /* Maksimum genişlik 1000px ile sınırlıdır */
-  margin: 10px auto; /* Üst ve alt boşluk 40px, sol ve sağda ortalanmış */
+  margin: 5% auto; /* Üst ve alt boşluk 40px, sol ve sağda ortalanmış */
   padding: 10px; /* İçeride 20px boşluk bırakılır */
   background-color: #bdd3f0; /* Konteynerin arka planı beyaz */
   border-radius: 10px; /* Köşeler yuvarlatılır */
@@ -56,16 +56,16 @@ body {
 
 /* Başlık stili */
 h1 {
-  font-size: 1cm; /* Başlık font büyüklüğü */
-  margin-bottom: 5px; /* Başlık altında 1px boşluk bırakılır */
+  font-size: 1cqmax /* Başlık font büyüklüğü */
+  margin-bottom: 0.1cm /* Başlık altında 1px boşluk bırakılır */
   color: hsl(30deg 82% 43%); /* Başlık rengi kahverengi */
 }
 
 /* Skor metni stili */
 .score {
-  font-size: 18px; /* Skor font büyüklüğü */
-  margin: 10px; /* Skor metni üst ve alt tarafında 10px boşluk bırakılır */
-  color: #1e88e5; /* Skor rengi mavi */
+  font-size: 38px; /* Skor font büyüklüğü */
+  margin: 1px; /* Skor metni üst ve alt tarafında 10px boşluk bırakılır */
+  color: #bd1212; /* Skor rengi mavi */
   font-weight: bold; /* Skor metni kalın yazılır */
 }
 

@@ -1,13 +1,3 @@
-// Fetch the JSON data dynamically
-let data = await fetch('./data.json')
-  .then(response => response.json())
-  .then(data => {
-    console.log("Data:", data);
-  })
-  .catch(error => {
-    console.error("Error loading JSON:", error);
-  });
-
 let kelimeListesi = [];
 let currentGroupIndex = 0;
 const groupSize = 8;
@@ -17,9 +7,16 @@ const oyunAlani = document.getElementById('oyun-alani');
 const prevButton = document.getElementById('onceki-grup');
 const nextButton = document.getElementById('sonraki-grup');
 const scoreDisplay = document.getElementById('score');
+const sureAdiSelect = document.getElementById('sure-adi-select'); // Dropdown for sure_adi
 
 // Excel dosyasını yükle
 document.getElementById('excel-file').addEventListener('change', loadExcel);
+
+// Dropdown change event to filter words by sure_adi
+sureAdiSelect.addEventListener('change', () => {
+  currentGroupIndex = 0; // Reset to first group when selection changes
+  renderGroup();
+});
 
 prevButton.addEventListener('click', () => {
   currentGroupIndex--;
@@ -43,17 +40,41 @@ function loadExcel(event) {
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-    kelimeListesi = jsonData.slice(1).map(([arabic, turkish, soundUrl]) => ({ arabic, turkish, soundUrl }));
+    // Kelimeleri ve sure_adi'ni içerecek şekilde düzenleme
+    kelimeListesi = jsonData.slice(1).map(([arabic, turkish, soundUrl, sure_adi]) => ({
+      arabic, turkish, soundUrl, sure_adi
+    }));
+
+    populateSureAdiDropdown();
     renderGroup();
   };
   reader.readAsArrayBuffer(file);
+}
+
+// Dropdown'da sure_adi değerlerini listele
+function populateSureAdiDropdown() {
+  const uniqueSureAdiValues = [...new Set(kelimeListesi.map(item => item.sure_adi))];
+  sureAdiSelect.innerHTML = ''; // Dropdown'ı temizle
+  uniqueSureAdiValues.forEach(sureAdi => {
+    const option = document.createElement('option');
+    option.value = sureAdi;
+    option.textContent = sureAdi || '-- No Sure Adi --';
+    sureAdiSelect.appendChild(option);
+  });
 }
 
 // Kartları gruplar halinde render et
 function renderGroup() {
   oyunAlani.innerHTML = '';
   const start = currentGroupIndex * groupSize;
-  const group = kelimeListesi.slice(start, start + groupSize);
+  
+  // Seçilen sure_adi'ne göre kelimeleri filtrele
+  const selectedSureAdi = sureAdiSelect.value;
+  const filteredKelimeListesi = selectedSureAdi
+    ? kelimeListesi.filter(item => item.sure_adi === selectedSureAdi)
+    : kelimeListesi;
+
+  const group = filteredKelimeListesi.slice(start, start + groupSize);
 
   if (!group.length) return;
 
@@ -67,7 +88,7 @@ function renderGroup() {
   oyunAlani.appendChild(kelimeGrubu);
 
   prevButton.disabled = currentGroupIndex === 0;
-  nextButton.disabled = start + groupSize >= kelimeListesi.length;
+  nextButton.disabled = start + groupSize >= filteredKelimeListesi.length;
 }
 
 // Kolon oluşturma

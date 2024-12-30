@@ -7,24 +7,35 @@
   <title>Arapça-Türkçe Eşleştirme Oyunu</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
   <div class="container">
     <h1><strong style="font-style: italic">Arapça-Türkçe Eşleştirme Oyunu</strong></h1>
     <p class="score">Puan: <span id="score">0</span></p>
+    
+    <!-- Sure Seçimi -->
+    <div class="sure-selection">
+      <label for="sure-adi-select">Sure Seçin:</label>
+      <select id="sure-adi-select">
+        <option value="">-- Sure Seçin --</option>
+      </select>
+    </div>
+
     <!-- Dosya seçme input'u -->
     <input type="file" id="excel-file" accept=".xlsx, .xls" />
+    
+    <!-- Oyun alanı -->
     <div id="oyun-alani"></div>
+
+    <!-- Navigasyon butonları -->
     <div class="navigation">
       <button id="onceki-grup" disabled>Önceki</button>
       <button id="sonraki-grup">Sonraki</button>
     </div>
-
-    
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.2/xlsx.full.min.js"></script>
   <script type="module" src="main.js"></script>
